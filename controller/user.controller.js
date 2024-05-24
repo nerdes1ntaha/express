@@ -199,18 +199,36 @@ exports.getUserBySalary = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { name, surname, salary } = req.body;
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      { name, surname, salary },
-      { new: true }
-    );
+    const User = await service.userService.updateUser(req)
     res
       .json({
         ...baseResponse,
-        data: updatedUser,
-        message: "Bilgileriniz güncellendi",
+        data: User,
+        message: "Güncelleme başarılı",
+      })
+      .status(StatusCodes.OK);
+  } catch (error) {
+    res
+      .json({
+        ...baseResponse,
+        message: "Bilgileriniz güncellenemedi",
+        error: error,
+        errorMessage: error.message,
+        succes: false,
+        error: true,
+      })
+      .status(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+};
+
+exports.updateProfilePhoto = async (req, res) => {
+  try {
+    const User = await service.userService.updateProfilePhoto(req)
+    res
+      .json({
+        ...baseResponse,
+        data: User,
+        message: "Güncelleme başarılı",
       })
       .status(StatusCodes.OK);
   } catch (error) {

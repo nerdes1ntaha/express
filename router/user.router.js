@@ -17,6 +17,10 @@ router.get(
 );
 router.put("/resetPassword", controller.userController.resetPassword);
 router.put("/updateUser/:id", controller.userController.updateUser);
+router.put(
+  "/updateProfilePhoto/:id",
+  controller.userController.updateProfilePhoto
+);
 
 module.exports = {
   user: router,
